@@ -1,0 +1,23 @@
+pyDeltaRCM.shared\_tools
+========================
+
+.. automodule:: pyDeltaRCM.shared_tools
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_iwalk
+      get_jwalk
+   
+   
+
+   
+   
+   
+
+   
+   
+   
