@@ -52,6 +52,8 @@ pyDeltaRCM.deltaRCM\_tools.Tools
       ~Tools.sed_parcel
       ~Tools.sed_route
       ~Tools.set_constants
+      ~Tools.show_attribute
+      ~Tools.show_ind
       ~Tools.topo_diffusion
       ~Tools.update_Q
       ~Tools.update_flow_field

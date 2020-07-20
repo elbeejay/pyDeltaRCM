@@ -54,6 +54,8 @@ pyDeltaRCM.model.DeltaModel
       ~DeltaModel.sed_parcel
       ~DeltaModel.sed_route
       ~DeltaModel.set_constants
+      ~DeltaModel.show_attribute
+      ~DeltaModel.show_ind
       ~DeltaModel.topo_diffusion
       ~DeltaModel.update
       ~DeltaModel.update_Q

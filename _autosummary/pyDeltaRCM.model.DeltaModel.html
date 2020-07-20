@@ -237,6 +237,12 @@ initializing arrays, and initializing output routines.</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_constants</span></code>()</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.show_attribute" title="pyDeltaRCM.model.DeltaModel.show_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_attribute</span></code></a>(attribute, **kwargs)</p></td>
+<td><p>Show an attribute over the model domain.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.show_ind" title="pyDeltaRCM.model.DeltaModel.show_ind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_ind</span></code></a>(ind, *args, **kwargs)</p></td>
+<td><p>Show points within the model domain.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.topo_diffusion" title="pyDeltaRCM.model.DeltaModel.topo_diffusion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topo_diffusion</span></code></a>()</p></td>
 <td><p>Diffuse topography after routing.</p></td>
 </tr>
@@ -664,6 +670,55 @@ sure to include the ‘.’ before the extension.</p></li>
 <dd><p>Sediment routing main method.</p>
 <p>This is the main method for sediment routing in the model. It is
 called once per <cite>update()</cite> call.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.model.DeltaModel.show_attribute">
+<code class="descname">show_attribute</code><span class="sig-paren">(</span><em>attribute</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.show_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show an attribute over the model domain.</p>
+<p>Show any attribute of the <a class="reference internal" href="#pyDeltaRCM.model.DeltaModel" title="pyDeltaRCM.model.DeltaModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeltaModel</span></code></a> class
+over the model domain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attribute</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – Name of the attribute you want to show.</p></li>
+<li><p><strong>ax</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.Axes</span></code> object, optional) – Which axes to render attribute into. Uses <code class="docutils literal notranslate"><span class="pre">gca()</span></code> if no axis is
+provided.</p></li>
+<li><p><strong>grid</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – Whether to plot a grid over the domain to demarcate individual
+cells. Default is <cite>True</cite> (show the grid).</p></li>
+<li><p><strong>block</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – Whether to show the plot automatically. Default is <cite>False</cite> (do not
+show automatically).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.model.DeltaModel.show_ind">
+<code class="descname">show_ind</code><span class="sig-paren">(</span><em>ind</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.show_ind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show points within the model domain.</p>
+<p>Show the location of points (indices) within the model domain. Can
+show points as tuple <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>, flat index <code class="docutils literal notranslate"><span class="pre">idx</span></code>, list of tuples
+<code class="docutils literal notranslate"><span class="pre">[(x1,</span> <span class="pre">y1),</span> <span class="pre">(x2,</span> <span class="pre">y2)]</span></code>, or list of flat indices <code class="docutils literal notranslate"><span class="pre">[idx1,</span> <span class="pre">idx2]</span></code>.
+Method takes arbitrary <cite>matplotlib</cite> arguments to <cite>plot</cite> the points as
+Matlab-style args (<code class="docutils literal notranslate"><span class="pre">'r*'</span></code>) or keyword arguments (<code class="docutils literal notranslate"><span class="pre">marker='s'</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ind</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code>, <cite>int</cite>, <cite>list</cite> of <cite>tuple</cite>, <cite>list</cite> of <cite>int</cite>, <cite>list</cite> of <cite>int</cite> and <cite>tuple</cite>) – Index (indices if list), to plot</p></li>
+<li><p><strong>ax</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.Axes</span></code> object, optional) – Which axes to render point into. Uses <code class="docutils literal notranslate"><span class="pre">gca()</span></code> if no axis is
+provided.</p></li>
+<li><p><strong>block</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – Whether to show the plot automatically. Default is <cite>False</cite> (do not
+show automatically).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>*args</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – Matlab-style point specifications, e.g., <code class="docutils literal notranslate"><span class="pre">'r*'</span></code>, <code class="docutils literal notranslate"><span class="pre">'bs'</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>optional</em>) – Any <cite>kwargs</cite> supported by <cite>matplotlib.pyplot.plt</cite>.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
