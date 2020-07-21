@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>User Guide &#8212; pyDeltaRCM 1.1.0 documentation</title>
+    <title>User Guide &#8212; pyDeltaRCM 1.1.2a documentation</title>
     <link rel="stylesheet" href="../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -34,7 +34,7 @@
         <li class="right" >
           <a href="10min.html" title="10-minute tutorial"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pyDeltaRCM 1.1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyDeltaRCM 1.1.2a documentation</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -53,7 +53,11 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#advanced-model-configurations">Advanced model configurations</a><ul>
-<li><a class="reference internal" href="#configuring-multiple-model-runs-from-a-single-yaml-file">Configuring multiple model runs from a single YAML file</a></li>
+<li><a class="reference internal" href="#configuring-multiple-model-runs-from-a-single-yaml-file">Configuring multiple model runs from a single YAML file</a><ul>
+<li><a class="reference internal" href="#matrix-expansion">Matrix expansion</a></li>
+<li><a class="reference internal" href="#ensemble-expansion">Ensemble expansion</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -168,7 +172,52 @@ Jobs are then run with:</p>
 <h2>Advanced model configurations<a class="headerlink" href="#advanced-model-configurations" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="configuring-multiple-model-runs-from-a-single-yaml-file">
 <span id="configuring-multiple-jobs"></span><h3>Configuring multiple model runs from a single YAML file<a class="headerlink" href="#configuring-multiple-model-runs-from-a-single-yaml-file" title="Permalink to this headline">¶</a></h3>
+<p>Multiple model runs (referred to as “jobs”) can be configured by a single <cite>.yml</cite> configuration file, by using the <cite>matrix</cite> and <cite>ensemble</cite> configuration keys.</p>
+<div class="section" id="matrix-expansion">
+<h4>Matrix expansion<a class="headerlink" href="#matrix-expansion" title="Permalink to this headline">¶</a></h4>
+<p>To use matrix expansion to configure multiple model runs, the dimensions of the matrix (i.e., the variables you want to run) should be listed below the <cite>matrix</cite> key. For example, the following configuration is a one-dimensional matrix with the variable <cite>f_bedload</cite>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">out_dir</span><span class="p">:</span> <span class="s">&#39;out_dir&#39;</span>
+<span class="nt">dx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="nt">h0</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
+
+<span class="nt">matrix</span><span class="p">:</span>
+  <span class="nt">f_bedload</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+</pre></div>
+</div>
+<p>This configuation would produce two model runs, one with bedload fraction (<cite>f_bedload</cite>) 0.5 and another with bedload fraction 0.2, and both with grid spacing (<cite>dx</cite>) 2.0 and basin depth (<cite>h0</cite>) 1.0.
+The matrix expansions will create two folders at <cite>./out_dir/job_000</cite> and <cite>./out_dir/job_001</cite> that each correspond to a created job.
+Each folder will contain a copy of the configuration file used for that job; for example, the full configuration for <cite>job_000</cite> is:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">out_dir</span><span class="p">:</span> <span class="s">&#39;out_dir/job_000&#39;</span>
+<span class="nt">dx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="nt">h0</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="nt">f_bedload</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+</pre></div>
+</div>
+<p>Additionally, a log file for each job is located in the output folder, and any output grid files or images specified by the input configuration will be located in the respective job output folder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must specify the <cite>out_dir</cite> key in the input YAML configuation to use matrix expansion.</p>
+</div>
+<p>Multiple dimensional matrix expansion is additionally supported. For example, the following configuation produces six jobs:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">out_dir</span><span class="p">:</span> <span class="s">&#39;out_dir&#39;</span>
+
+<span class="nt">matrix</span><span class="p">:</span>
+  <span class="nt">f_bedload</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.4</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+  <span class="nt">h0</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ensemble-expansion">
+<h4>Ensemble expansion<a class="headerlink" href="#ensemble-expansion" title="Permalink to this headline">¶</a></h4>
 <p>todo</p>
+</div>
 </div>
 </div>
 </div>
@@ -194,7 +243,7 @@ Jobs are then run with:</p>
         <li class="right" >
           <a href="10min.html" title="10-minute tutorial"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pyDeltaRCM 1.1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyDeltaRCM 1.1.2a documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

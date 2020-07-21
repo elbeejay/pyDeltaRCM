@@ -18,6 +18,7 @@ pyDeltaRCM.preprocessor.BasePreprocessor
       ~BasePreprocessor.extract_timesteps
       ~BasePreprocessor.extract_yaml_config
       ~BasePreprocessor.run_jobs
+      ~BasePreprocessor.write_yaml_config
    
    
 

@@ -20,6 +20,7 @@ pyDeltaRCM.preprocessor.PreprocessorCLI
       ~PreprocessorCLI.extract_yaml_config
       ~PreprocessorCLI.process_arguments
       ~PreprocessorCLI.run_jobs
+      ~PreprocessorCLI.write_yaml_config
    
    
 
