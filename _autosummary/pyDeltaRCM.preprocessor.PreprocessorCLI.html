@@ -113,6 +113,12 @@ during instantiation of the class.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.construct_job_list" title="pyDeltaRCM.preprocessor.PreprocessorCLI.construct_job_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">construct_job_list</span></code></a>()</p></td>
 <td><p>Construct the job list.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.create_matrix" title="pyDeltaRCM.preprocessor.PreprocessorCLI.create_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_matrix</span></code></a>()</p></td>
+<td><p>Create a matrix if not already in the yaml.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.expand_ensemble" title="pyDeltaRCM.preprocessor.PreprocessorCLI.expand_ensemble"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expand_ensemble</span></code></a>()</p></td>
+<td><p>Create ensemble random seeds and put into matrix.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.expand_yaml_matrix" title="pyDeltaRCM.preprocessor.PreprocessorCLI.expand_yaml_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expand_yaml_matrix</span></code></a>()</p></td>
 <td><p>Expand YAML matrix, if given.</p></td>
 </tr>
@@ -128,7 +134,10 @@ during instantiation of the class.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.run_jobs" title="pyDeltaRCM.preprocessor.PreprocessorCLI.run_jobs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_jobs</span></code></a>()</p></td>
 <td><p>Run the set of jobs.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.write_yaml_config" title="pyDeltaRCM.preprocessor.PreprocessorCLI.write_yaml_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_yaml_config</span></code></a>(i, ith_config, ith_dir, ith_id)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.seed_matrix" title="pyDeltaRCM.preprocessor.PreprocessorCLI.seed_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">seed_matrix</span></code></a>(n_ensembles)</p></td>
+<td><p>Generate random integers to be used as seeds for ensemble runs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.write_yaml_config" title="pyDeltaRCM.preprocessor.PreprocessorCLI.write_yaml_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_yaml_config</span></code></a>(i, ith_config, ith_dir, ith_id)</p></td>
 <td><p>Write full config to file in output folder.</p></td>
 </tr>
 </tbody>
@@ -148,6 +157,20 @@ during instantiation of the class.</p>
 <dd><p>Construct the job list.</p>
 <p>The job list is constructed by expanding the <code class="docutils literal notranslate"><span class="pre">.yml</span></code> matrix, and
 forming ensemble runs as needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.preprocessor.PreprocessorCLI.create_matrix">
+<code class="descname">create_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.create_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a matrix if not already in the yaml.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.preprocessor.PreprocessorCLI.expand_ensemble">
+<code class="descname">expand_ensemble</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.expand_ensemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create ensemble random seeds and put into matrix.</p>
+<p>Seed the yaml configuration based on the number of ensembles specified.
+If matrix exists add seeds there, if not, create matrix and add seeds.</p>
 </dd></dl>
 
 <dl class="method">
@@ -199,6 +222,17 @@ any way.</p>
 <p class="admonition-title">Note</p>
 <p>TODO: implement the parallel pool.</p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.preprocessor.PreprocessorCLI.seed_matrix">
+<code class="descname">seed_matrix</code><span class="sig-paren">(</span><em>n_ensembles</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.preprocessor.PreprocessorCLI.seed_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate random integers to be used as seeds for ensemble runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_ensembles</strong> (<cite>int</cite>) – Number of ensembles which is the number of seeds to generate.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

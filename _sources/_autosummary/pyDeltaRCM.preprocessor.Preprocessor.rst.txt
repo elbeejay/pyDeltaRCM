@@ -15,10 +15,13 @@ pyDeltaRCM.preprocessor.Preprocessor
    
       ~Preprocessor.__init__
       ~Preprocessor.construct_job_list
+      ~Preprocessor.create_matrix
+      ~Preprocessor.expand_ensemble
       ~Preprocessor.expand_yaml_matrix
       ~Preprocessor.extract_timesteps
       ~Preprocessor.extract_yaml_config
       ~Preprocessor.run_jobs
+      ~Preprocessor.seed_matrix
       ~Preprocessor.write_yaml_config
    
    

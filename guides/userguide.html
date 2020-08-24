@@ -216,7 +216,29 @@ Each folder will contain a copy of the configuration file used for that job; for
 </div>
 <div class="section" id="ensemble-expansion">
 <h4>Ensemble expansion<a class="headerlink" href="#ensemble-expansion" title="Permalink to this headline">¶</a></h4>
-<p>todo</p>
+<p>Ensemble expansion creates replicates of specified model configurations with different random seed values.
+Like the matrix expansion, the <cite>out_dir</cite> key must be specified in the input configuration file.
+The <cite>ensemble</cite> key can be added to any configuration file that does not explicitly define the random seed.
+As an example, two model runs can be generated with the same input sediment fraction using the following configuration <cite>.yml</cite>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">out_dir</span><span class="p">:</span> <span class="s">&#39;out_dir&#39;</span>
+
+<span class="nt">f_bedload</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+<span class="nt">ensemble</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+</pre></div>
+</div>
+<p>This configuration file would produce two model runs that share the same parameters, but have different initial random seed values.
+The ensemble expansion can be applied to configuration files that include a matrix expansion as well:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">out_dir</span><span class="p">:</span> <span class="s">&#39;out_dir&#39;</span>
+
+<span class="nt">ensemble</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+
+<span class="nt">matrix</span><span class="p">:</span>
+  <span class="nt">h0</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">1.0</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>
+</pre></div>
+</div>
+<p>The above configuration file would produce 6 model runs, 3 with a basin depth (<cite>h0</cite>) of 1.0, and 3 with a basin depth of 2.0.</p>
 </div>
 </div>
 </div>
