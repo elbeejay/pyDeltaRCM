@@ -77,10 +77,15 @@ pyDeltaRCM.model.DeltaModel
       ~DeltaModel.channel_flow_depth
       ~DeltaModel.channel_flow_velocity
       ~DeltaModel.channel_width
+      ~DeltaModel.dt
       ~DeltaModel.influx_sediment_concentration
+      ~DeltaModel.save_iter
+      ~DeltaModel.save_time_since_last
       ~DeltaModel.sea_surface_elevation
       ~DeltaModel.sea_surface_elevation_change
       ~DeltaModel.sea_surface_mean_elevation
+      ~DeltaModel.time
+      ~DeltaModel.time_iter
       ~DeltaModel.time_step
       ~DeltaModel.water_depth
    

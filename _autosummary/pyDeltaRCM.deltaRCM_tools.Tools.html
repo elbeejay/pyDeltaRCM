@@ -239,7 +239,13 @@
 <code class="descname">apply_subsidence</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.apply_subsidence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply subsidence pattern.</p>
 <p>Apply subsidence to domain if toggle_subsidence is True, and
-start_subsidence is =&lt; timestep.</p>
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">time</span></code> is <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>
+:<code class="xref py py-obj docutils literal notranslate"><span class="pre">start_subsidence</span></code>. Note, that the
+:configuration of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">update()</span></code> method
+:determines that the subsidence may be applied before the model time
+:is incremented, such that subsidence will begin on the step
+:<em>following</em> the time step that brings the model to <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">==</span>
+<span class="pre">:start_subsidence</span></code>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -423,16 +429,17 @@ the relevant flags in the YAML configuration file.</p>
 <dt id="pyDeltaRCM.deltaRCM_tools.Tools.output_strata">
 <code class="descname">output_strata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.output_strata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save stratigraphy as sparse matrix to file.</p>
-<p>Saves the stratigraphy (sand fraction) sparse matrices into output netcdf file</p>
+<p>Saves the stratigraphy (sand fraction) sparse matrices into output
+netcdf file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDeltaRCM.deltaRCM_tools.Tools.record_stratigraphy">
 <code class="descname">record_stratigraphy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.record_stratigraphy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save stratigraphy to file.</p>
-<p>Saves the sand fraction of deposited sediment
-into a sparse array created by init_stratigraphy().</p>
-<p>Only runs if save_strata is True.</p>
+<p>Saves the sand fraction of deposited sediment into a sparse array
+created by <code class="xref py py-obj docutils literal notranslate"><span class="pre">init_stratigraphy()</span></code>.</p>
+<p>Only runs if <code class="xref py py-obj docutils literal notranslate"><span class="pre">save_strata</span></code> is True.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This routine needs a complete description of the algorithm,
@@ -450,7 +457,7 @@ straitgraphy cubes.</p>
 water surface calculation and sediment parcel routing routines.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Will print the current timestep to stdout, if <code class="docutils literal notranslate"><span class="pre">verbose</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p>
+<p>Will print the current time to stdout, if <code class="docutils literal notranslate"><span class="pre">verbose</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>

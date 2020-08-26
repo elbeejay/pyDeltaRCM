@@ -288,22 +288,37 @@ initializing arrays, and initializing output routines.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.channel_width" title="pyDeltaRCM.model.DeltaModel.channel_width"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channel_width</span></code></a></p></td>
 <td><p>Get channel width.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.influx_sediment_concentration" title="pyDeltaRCM.model.DeltaModel.influx_sediment_concentration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">influx_sediment_concentration</span></code></a></p></td>
-<td><p>Get influx sediment concentration.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.sea_surface_elevation" title="pyDeltaRCM.model.DeltaModel.sea_surface_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sea_surface_elevation</span></code></a></p></td>
-<td><p>Get stage.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.sea_surface_elevation_change" title="pyDeltaRCM.model.DeltaModel.sea_surface_elevation_change"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sea_surface_elevation_change</span></code></a></p></td>
-<td><p>Get rate of change of sea surface elevation, per timestep.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.sea_surface_mean_elevation" title="pyDeltaRCM.model.DeltaModel.sea_surface_mean_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sea_surface_mean_elevation</span></code></a></p></td>
-<td><p>Get sea surface mean elevation.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.time_step" title="pyDeltaRCM.model.DeltaModel.time_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_step</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.dt" title="pyDeltaRCM.model.DeltaModel.dt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dt</span></code></a></p></td>
 <td><p>The time step.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.water_depth" title="pyDeltaRCM.model.DeltaModel.water_depth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">water_depth</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.influx_sediment_concentration" title="pyDeltaRCM.model.DeltaModel.influx_sediment_concentration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">influx_sediment_concentration</span></code></a></p></td>
+<td><p>Get influx sediment concentration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.save_iter" title="pyDeltaRCM.model.DeltaModel.save_iter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_iter</span></code></a></p></td>
+<td><p>Number of times data has been saved.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.save_time_since_last" title="pyDeltaRCM.model.DeltaModel.save_time_since_last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_time_since_last</span></code></a></p></td>
+<td><p>Time since data last output.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.sea_surface_elevation" title="pyDeltaRCM.model.DeltaModel.sea_surface_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sea_surface_elevation</span></code></a></p></td>
+<td><p>Get stage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.sea_surface_elevation_change" title="pyDeltaRCM.model.DeltaModel.sea_surface_elevation_change"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sea_surface_elevation_change</span></code></a></p></td>
+<td><p>Get rate of change of sea surface elevation, per timestep.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.sea_surface_mean_elevation" title="pyDeltaRCM.model.DeltaModel.sea_surface_mean_elevation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sea_surface_mean_elevation</span></code></a></p></td>
+<td><p>Get sea surface mean elevation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.time" title="pyDeltaRCM.model.DeltaModel.time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time</span></code></a></p></td>
+<td><p>Elapsed model time in seconds.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.time_iter" title="pyDeltaRCM.model.DeltaModel.time_iter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_iter</span></code></a></p></td>
+<td><p>Number of time iterations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.time_step" title="pyDeltaRCM.model.DeltaModel.time_step"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_step</span></code></a></p></td>
+<td><p>Alias for <cite>dt</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.water_depth" title="pyDeltaRCM.model.DeltaModel.water_depth"><code class="xref py py-obj docutils literal notranslate"><span class="pre">water_depth</span></code></a></p></td>
 <td><p>Get depth.</p></td>
 </tr>
 </tbody>
@@ -329,7 +344,13 @@ initializing arrays, and initializing output routines.</p>
 <code class="descname">apply_subsidence</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.apply_subsidence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply subsidence pattern.</p>
 <p>Apply subsidence to domain if toggle_subsidence is True, and
-start_subsidence is =&lt; timestep.</p>
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">time</span></code> is <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>
+:<code class="xref py py-obj docutils literal notranslate"><span class="pre">start_subsidence</span></code>. Note, that the
+:configuration of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">update()</span></code> method
+:determines that the subsidence may be applied before the model time
+:is incremented, such that subsidence will begin on the step
+:<em>following</em> the time step that brings the model to <code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">==</span>
+<span class="pre">:start_subsidence</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -410,6 +431,17 @@ variable is changed, including <cite>channel_flow_velocity</cite>,
 <dd><p>Set the random seed if given.</p>
 <p>If a random seed is specified, set the seed to this value.</p>
 <p>Writes the seed to the log for record.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDeltaRCM.model.DeltaModel.dt">
+<code class="descname">dt</code><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.dt" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>UserWarning</strong> – If a very small timestep is configured.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -557,16 +589,17 @@ the relevant flags in the YAML configuration file.</p>
 <dt id="pyDeltaRCM.model.DeltaModel.output_strata">
 <code class="descname">output_strata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.output_strata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save stratigraphy as sparse matrix to file.</p>
-<p>Saves the stratigraphy (sand fraction) sparse matrices into output netcdf file</p>
+<p>Saves the stratigraphy (sand fraction) sparse matrices into output
+netcdf file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDeltaRCM.model.DeltaModel.record_stratigraphy">
 <code class="descname">record_stratigraphy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.record_stratigraphy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save stratigraphy to file.</p>
-<p>Saves the sand fraction of deposited sediment
-into a sparse array created by init_stratigraphy().</p>
-<p>Only runs if save_strata is True.</p>
+<p>Saves the sand fraction of deposited sediment into a sparse array
+created by <code class="xref py py-obj docutils literal notranslate"><span class="pre">init_stratigraphy()</span></code>.</p>
+<p>Only runs if <code class="xref py py-obj docutils literal notranslate"><span class="pre">save_strata</span></code> is True.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This routine needs a complete description of the algorithm,
@@ -584,7 +617,7 @@ straitgraphy cubes.</p>
 water surface calculation and sediment parcel routing routines.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Will print the current timestep to stdout, if <code class="docutils literal notranslate"><span class="pre">verbose</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p>
+<p>Will print the current time to stdout, if <code class="docutils literal notranslate"><span class="pre">verbose</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
@@ -638,6 +671,19 @@ sure to include the ‘.’ before the extension.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDeltaRCM.model.DeltaModel.save_iter">
+<code class="descname">save_iter</code><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.save_iter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of times data has been saved.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDeltaRCM.model.DeltaModel.save_time_since_last">
+<code class="descname">save_time_since_last</code><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.save_time_since_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time since data last output.</p>
+<p>The number of times the <a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.update" title="pyDeltaRCM.model.DeltaModel.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a> method has been called.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -722,14 +768,22 @@ show automatically).</p></li>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="pyDeltaRCM.model.DeltaModel.time">
+<code class="descname">time</code><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elapsed model time in seconds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDeltaRCM.model.DeltaModel.time_iter">
+<code class="descname">time_iter</code><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.time_iter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of time iterations.</p>
+<p>The number of times the <a class="reference internal" href="#pyDeltaRCM.model.DeltaModel.update" title="pyDeltaRCM.model.DeltaModel.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a> method has been called.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="pyDeltaRCM.model.DeltaModel.time_step">
 <code class="descname">time_step</code><a class="headerlink" href="#pyDeltaRCM.model.DeltaModel.time_step" title="Permalink to this definition">¶</a></dt>
-<dd><p>The time step.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>UserWarning</strong> – If a very small timestep is configured.</p>
-</dd>
-</dl>
+<dd><p>Alias for <cite>dt</cite>.</p>
 </dd></dl>
 
 <dl class="method">
