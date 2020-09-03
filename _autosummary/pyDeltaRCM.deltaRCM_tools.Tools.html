@@ -163,14 +163,20 @@
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_water_iteration</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.make_figure" title="pyDeltaRCM.deltaRCM_tools.Tools.make_figure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_figure</span></code></a>(var, timestep)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.load_checkpoint" title="pyDeltaRCM.deltaRCM_tools.Tools.load_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_checkpoint</span></code></a>()</p></td>
+<td><p>Load the checkpoint from the .npz file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.make_figure" title="pyDeltaRCM.deltaRCM_tools.Tools.make_figure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_figure</span></code></a>(var, timestep)</p></td>
 <td><p>Create a figure.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.mud_dep_ero" title="pyDeltaRCM.deltaRCM_tools.Tools.mud_dep_ero"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mud_dep_ero</span></code></a>(px, py)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.mud_dep_ero" title="pyDeltaRCM.deltaRCM_tools.Tools.mud_dep_ero"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mud_dep_ero</span></code></a>(px, py)</p></td>
 <td><p>Decide if deposit or erode mud.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.mud_route" title="pyDeltaRCM.deltaRCM_tools.Tools.mud_route"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mud_route</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.mud_route" title="pyDeltaRCM.deltaRCM_tools.Tools.mud_route"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mud_route</span></code></a>()</p></td>
 <td><p>Route mud parcels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.output_checkpoint" title="pyDeltaRCM.deltaRCM_tools.Tools.output_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output_checkpoint</span></code></a>()</p></td>
+<td><p>Save checkpoint.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.output_data" title="pyDeltaRCM.deltaRCM_tools.Tools.output_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output_data</span></code></a>()</p></td>
 <td><p>Save grids and figures.</p></td>
@@ -199,37 +205,40 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.save_grids" title="pyDeltaRCM.deltaRCM_tools.Tools.save_grids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_grids</span></code></a>(var_name, var, ts)</p></td>
 <td><p>Save a grid into an existing netCDF file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.sed_parcel" title="pyDeltaRCM.deltaRCM_tools.Tools.sed_parcel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sed_parcel</span></code></a>(theta_sed, sed, px, py)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.save_the_checkpoint" title="pyDeltaRCM.deltaRCM_tools.Tools.save_the_checkpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_the_checkpoint</span></code></a>()</p></td>
+<td><p>Save checkpoint files.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.sed_parcel" title="pyDeltaRCM.deltaRCM_tools.Tools.sed_parcel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sed_parcel</span></code></a>(theta_sed, sed, px, py)</p></td>
 <td><p>Route one sediment parcel.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.sed_route" title="pyDeltaRCM.deltaRCM_tools.Tools.sed_route"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sed_route</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.sed_route" title="pyDeltaRCM.deltaRCM_tools.Tools.sed_route"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sed_route</span></code></a>()</p></td>
 <td><p>Sediment routing main method.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_constants</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_constants</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.show_attribute" title="pyDeltaRCM.deltaRCM_tools.Tools.show_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_attribute</span></code></a>(attribute, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.show_attribute" title="pyDeltaRCM.deltaRCM_tools.Tools.show_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_attribute</span></code></a>(attribute, **kwargs)</p></td>
 <td><p>Show an attribute over the model domain.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.show_ind" title="pyDeltaRCM.deltaRCM_tools.Tools.show_ind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_ind</span></code></a>(ind, *args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.show_ind" title="pyDeltaRCM.deltaRCM_tools.Tools.show_ind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_ind</span></code></a>(ind, *args, **kwargs)</p></td>
 <td><p>Show points within the model domain.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.topo_diffusion" title="pyDeltaRCM.deltaRCM_tools.Tools.topo_diffusion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topo_diffusion</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.topo_diffusion" title="pyDeltaRCM.deltaRCM_tools.Tools.topo_diffusion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topo_diffusion</span></code></a>()</p></td>
 <td><p>Diffuse topography after routing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_Q</span></code>(dist, current_inds, next_index, …)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_Q</span></code>(dist, current_inds, next_index, …)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_flow_field" title="pyDeltaRCM.deltaRCM_tools.Tools.update_flow_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_flow_field</span></code></a>(iteration)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_flow_field" title="pyDeltaRCM.deltaRCM_tools.Tools.update_flow_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_flow_field</span></code></a>(iteration)</p></td>
 <td><p>Update water discharge after one water iteration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_u" title="pyDeltaRCM.deltaRCM_tools.Tools.update_u"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_u</span></code></a>(px, py)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_u" title="pyDeltaRCM.deltaRCM_tools.Tools.update_u"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_u</span></code></a>(px, py)</p></td>
 <td><p>Update velocity.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_velocity_field" title="pyDeltaRCM.deltaRCM_tools.Tools.update_velocity_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_velocity_field</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_velocity_field" title="pyDeltaRCM.deltaRCM_tools.Tools.update_velocity_field"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_velocity_field</span></code></a>()</p></td>
 <td><p>Update the flow velocity field after one water iteration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_water" title="pyDeltaRCM.deltaRCM_tools.Tools.update_water"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_water</span></code></a>(timestep, itr)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyDeltaRCM.deltaRCM_tools.Tools.update_water" title="pyDeltaRCM.deltaRCM_tools.Tools.update_water"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_water</span></code></a>(timestep, itr)</p></td>
 <td><p>Update surface after routing all parcels.</p></td>
 </tr>
 </tbody>
@@ -387,6 +396,12 @@ toggle_subsidence is True (default False)</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyDeltaRCM.deltaRCM_tools.Tools.load_checkpoint">
+<code class="descname">load_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.load_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the checkpoint from the .npz file.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyDeltaRCM.deltaRCM_tools.Tools.make_figure">
 <code class="descname">make_figure</code><span class="sig-paren">(</span><em>var</em>, <em>timestep</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.make_figure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a figure.</p>
@@ -414,6 +429,14 @@ looked up via <cite>getattr</cite>.</p>
 <dt id="pyDeltaRCM.deltaRCM_tools.Tools.mud_route">
 <code class="descname">mud_route</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.mud_route" title="Permalink to this definition">¶</a></dt>
 <dd><p>Route mud parcels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.deltaRCM_tools.Tools.output_checkpoint">
+<code class="descname">output_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.output_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save checkpoint.</p>
+<p>Save checkpoint data (including rng state) so that the model can be
+resumed from this time.</p>
 </dd></dl>
 
 <dl class="method">
@@ -511,6 +534,27 @@ sure to include the ‘.’ before the extension.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDeltaRCM.deltaRCM_tools.Tools.save_the_checkpoint">
+<code class="descname">save_the_checkpoint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDeltaRCM.deltaRCM_tools.Tools.save_the_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save checkpoint files.</p>
+<p>Saves the grids to a .npz file so that the model can be
+initiated from this point. The timestep of the checkpoint is also
+saved. The values from the model that are saved to the checkpoint.npz
+are the following:
+- Model time
+- Flow velocity and its components
+- Water depth
+- Water stage
+- Topography
+- Current random seed state
+- Stratigraphic ‘topography’ in ‘strata_eta.npz’
+- Stratigraphic sand fraction in ‘strata_sand_frac.npz’
+If <cite>save_checkpoint</cite> is turned on, checkpoints are re-written
+with either a frequency of <cite>checkpoint_dt</cite> or <cite>save_dt</cite> if
+<cite>checkpoint_dt</cite> has not been explicitly defined.</p>
 </dd></dl>
 
 <dl class="method">

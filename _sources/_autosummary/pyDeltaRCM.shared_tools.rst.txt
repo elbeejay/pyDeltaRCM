@@ -11,6 +11,8 @@ pyDeltaRCM.shared\_tools
    
       get_iwalk
       get_jwalk
+      get_random_state
+      set_random_state
    
    
 

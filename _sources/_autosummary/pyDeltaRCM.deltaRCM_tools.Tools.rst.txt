@@ -37,9 +37,11 @@ pyDeltaRCM.deltaRCM\_tools.Tools
       ~Tools.init_stratigraphy
       ~Tools.init_subsidence
       ~Tools.init_water_iteration
+      ~Tools.load_checkpoint
       ~Tools.make_figure
       ~Tools.mud_dep_ero
       ~Tools.mud_route
+      ~Tools.output_checkpoint
       ~Tools.output_data
       ~Tools.output_strata
       ~Tools.record_stratigraphy
@@ -49,6 +51,7 @@ pyDeltaRCM.deltaRCM\_tools.Tools
       ~Tools.sand_route
       ~Tools.save_figure
       ~Tools.save_grids
+      ~Tools.save_the_checkpoint
       ~Tools.sed_parcel
       ~Tools.sed_route
       ~Tools.set_constants

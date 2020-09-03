@@ -22,6 +22,7 @@ pyDeltaRCM.init\_tools.init\_tools
       ~init_tools.init_output_infrastructure
       ~init_tools.init_stratigraphy
       ~init_tools.init_subsidence
+      ~init_tools.load_checkpoint
       ~init_tools.set_constants
    
    
