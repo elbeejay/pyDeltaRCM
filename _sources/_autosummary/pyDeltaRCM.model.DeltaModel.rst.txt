@@ -1,4 +1,4 @@
-pyDeltaRCM.model.DeltaModel
+﻿pyDeltaRCM.model.DeltaModel
 ===========================
 
 .. currentmodule:: pyDeltaRCM.model
@@ -39,6 +39,8 @@ pyDeltaRCM.model.DeltaModel
       ~DeltaModel.init_subsidence
       ~DeltaModel.init_water_iteration
       ~DeltaModel.load_checkpoint
+      ~DeltaModel.log_info
+      ~DeltaModel.log_model_time
       ~DeltaModel.make_figure
       ~DeltaModel.output_checkpoint
       ~DeltaModel.output_data
