@@ -193,6 +193,8 @@ class TestModelIsReproducible:
         # check a few pieces of metadata
         assert ModelA['meta']['L0'][:] == ModelB['meta']['L0'][:]
         assert ModelA['meta'].variables.keys() == ModelB['meta'].variables.keys()
+        # final time should be the same
+        assert ModelA['time'][-1].data == ModelB['time'][-1].data
         # final eta grids should be the same
         assert np.all(ModelA['eta'][-1, :, :].data == ModelB['eta'][-1, :, :].data)
         # close netCDF output files
@@ -233,6 +235,8 @@ class TestModelIsReproducible:
         # check a few pieces of metadata
         assert ModelA['meta']['L0'][:] == ModelB['meta']['L0'][:]
         assert ModelA['meta'].variables.keys() == ModelB['meta'].variables.keys()
+        # final time should be the same
+        assert ModelA['time'][-1].data == ModelB['time'][-1].data
         # final eta grids should be the same
         assert np.all(ModelA['eta'][-1, :, :].data == ModelB['eta'][-1, :, :].data)
         # close netCDF output files
