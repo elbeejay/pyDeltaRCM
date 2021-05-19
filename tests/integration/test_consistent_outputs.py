@@ -1,8 +1,11 @@
 import pytest
+import os
 import numpy as np
 
 from .. import utilities
 from pyDeltaRCM import DeltaModel
+from pyDeltaRCM import preprocessor
+from netCDF4 import Dataset
 
 
 class TestConsistentOutputsBetweenMerges:
@@ -156,3 +159,82 @@ class TestModelIsReproducible:
         assert np.all(ModelA.stage == ModelB.stage)
         assert np.all(ModelA.sand_frac == ModelB.sand_frac)
         assert np.all(ModelA.active_layer == ModelB.active_layer)
+
+    def test_same_models_matrix(self, tmp_path):
+        """Test models that have same parameters."""
+        file_name = 'user_parameters.yaml'
+        p, f = utilities.create_temporary_file(tmp_path, file_name)
+        utilities.write_parameter_to_file(f, 'out_dir', tmp_path / 'out_dir')
+        utilities.write_parameter_to_file(f, 'Length', 1000.0)
+        utilities.write_parameter_to_file(f, 'Width', 2000.0)
+        utilities.write_parameter_to_file(f, 'verbose', 1)
+        utilities.write_parameter_to_file(f, 'dx', 50.0)
+        utilities.write_parameter_to_file(f, 'L0_meters', 150.0)
+        utilities.write_parameter_to_file(f, 'N0_meters', 250.0)
+        utilities.write_parameter_to_file(f, 'f_bedload', 0.2)
+        utilities.write_parameter_to_file(f, 'save_eta_grids', True)
+        utilities.write_matrix_to_file(f, ['seed'], [[1, 1]])
+        f.close()
+
+        # use preprocessor to run models
+        pp = preprocessor.Preprocessor(input_file=p, timesteps=2)
+        pp.run_jobs()
+
+        # look at outputs
+        ModelA = Dataset(os.path.join(str(pp._file_list[0])[:-12],
+                         'pyDeltaRCM_output.nc'), 'r', format='NETCDF4')
+        ModelB = Dataset(os.path.join(str(pp._file_list[1])[:-12],
+                         'pyDeltaRCM_output.nc'), 'r', format='NETCDF4')
+
+        # check attributes of the netCDFs
+        # final eta grid has same LxW shape
+        assert ModelA['eta'][-1, :, :].shape == ModelB['eta'][-1, :, :].shape
+        assert ModelA.variables.keys() == ModelB.variables.keys()
+        # check a few pieces of metadata
+        assert ModelA['meta']['L0'][:] == ModelB['meta']['L0'][:]
+        assert ModelA['meta'].variables.keys() == ModelB['meta'].variables.keys()
+        # final eta grids should be the same
+        assert np.all(ModelA['eta'][-1, :, :].data == ModelB['eta'][-1, :, :].data)
+        # close netCDF output files
+        ModelA.close()
+        ModelB.close()
+
+    def test_same_models_diff_save_dt(self, tmp_path):
+        """Test models that have same parameters but different save_dt."""
+        file_name = 'user_parameters.yaml'
+        p, f = utilities.create_temporary_file(tmp_path, file_name)
+        utilities.write_parameter_to_file(f, 'out_dir', tmp_path / 'out_dir')
+        utilities.write_parameter_to_file(f, 'Length', 1000.0)
+        utilities.write_parameter_to_file(f, 'Width', 2000.0)
+        utilities.write_parameter_to_file(f, 'seed', 1)
+        utilities.write_parameter_to_file(f, 'verbose', 1)
+        utilities.write_parameter_to_file(f, 'dx', 50.0)
+        utilities.write_parameter_to_file(f, 'L0_meters', 150.0)
+        utilities.write_parameter_to_file(f, 'N0_meters', 250.0)
+        utilities.write_parameter_to_file(f, 'f_bedload', 0.2)
+        utilities.write_parameter_to_file(f, 'save_eta_grids', True)
+        utilities.write_matrix_to_file(f, ['save_dt'], [[0, 50000]])
+        f.close()
+
+        # use preprocessor to run models
+        pp = preprocessor.Preprocessor(input_file=p, timesteps=2)
+        pp.run_jobs()
+
+        # look at outputs
+        ModelA = Dataset(os.path.join(str(pp._file_list[0])[:-12],
+                         'pyDeltaRCM_output.nc'), 'r', format='NETCDF4')
+        ModelB = Dataset(os.path.join(str(pp._file_list[1])[:-12],
+                         'pyDeltaRCM_output.nc'), 'r', format='NETCDF4')
+
+        # check attributes of the netCDFs
+        # final eta grid has same LxW shape
+        assert ModelA['eta'][-1, :, :].shape == ModelB['eta'][-1, :, :].shape
+        assert ModelA.variables.keys() == ModelB.variables.keys()
+        # check a few pieces of metadata
+        assert ModelA['meta']['L0'][:] == ModelB['meta']['L0'][:]
+        assert ModelA['meta'].variables.keys() == ModelB['meta'].variables.keys()
+        # final eta grids should be the same
+        assert np.all(ModelA['eta'][-1, :, :].data == ModelB['eta'][-1, :, :].data)
+        # close netCDF output files
+        ModelA.close()
+        ModelB.close()
