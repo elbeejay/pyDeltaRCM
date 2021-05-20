@@ -178,6 +178,9 @@ stepmax:
 sand_frac_bc:
   type: ['float', 'int']
   default: 0
+boundary_radius:
+  type: ['float', 'int']
+  default: 1e15
 clobber_netcdf:
   type: 'bool'
   default: False

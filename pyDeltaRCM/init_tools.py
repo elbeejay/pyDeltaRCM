@@ -470,7 +470,9 @@ class init_tools(abc.ABC):
                   for j in range(self.W)]
         bounds = np.reshape(bounds, (self.L, self.W))
 
-        self.cell_type[bounds >= min(self.L - 5, self.W / 2 - 5)] = cell_edge
+        radius_value = min(int(self.boundary_radius / self.dx),
+                           min(self.L - 5, self.W / 2 - 5))
+        self.cell_type[bounds >= radius_value] = cell_edge
 
         self.cell_type[:self.L0, :] = cell_land
         self.cell_type[:self.L0, channel_inds:y_channel_max] = cell_channel

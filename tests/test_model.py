@@ -324,6 +324,25 @@ class Test__init__:
         with pytest.raises(FileExistsError):
             _ = DeltaModel(input_file=p)
 
+    def test_default_boundary_radius(self, tmp_path):
+        p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
+        _model_1 = DeltaModel(input_file=p)
+        # assert that model boundary_radius is default value
+        assert _model_1._boundary_radius == 1e15
+
+    def test_negative_boundary_radius(self, tmp_path):
+        p = utilities.yaml_from_dict(tmp_path, 'input.yaml',
+                                     {'boundary_radius': -5})
+        with pytest.raises(ValueError):
+            _ = DeltaModel(input_file=p)
+
+    def test_custom_boundary_radius(self, tmp_path):
+        p = utilities.yaml_from_dict(tmp_path, 'input.yaml',
+                                     {'boundary_radius': 500})
+        _model_1 = DeltaModel(input_file=p)
+        # assert custom value is being used
+        assert _model_1._boundary_radius == 500
+
 
 class TestDeprecatedHooks:
 

@@ -1436,3 +1436,25 @@ class DeltaModel(iteration_tools, sed_tools, water_tools,
     @sand_frac_bc.setter
     def sand_frac_bc(self, sand_frac_bc):
         self._sand_frac_bc = sand_frac_bc
+
+    @property
+    def boundary_radius(self):
+        """
+        Radial boundary for parcel random walks.
+
+        This is the radial boundary used to specify the effective "edge" of
+        the domain by controlling the radial boundary in the `cell_type`
+        array. Should be specified in meters. The radius used to set the
+        boundary is defined as either this boundary_radius, or a
+        parameter based on domain dimensions, whichever is smaller. The default
+        value is 1e15, which means that the parameter based on the domain
+        dimensions will be used to set the bounding radius as it will be
+        smaller.
+        """
+        return self._boundary_radius
+
+    @boundary_radius.setter
+    def boundary_radius(self, boundary_radius):
+        if boundary_radius < 0:
+            raise ValueError('boundary_radius must be a positive value.')
+        self._boundary_radius = boundary_radius
