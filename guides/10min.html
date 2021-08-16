@@ -54,7 +54,7 @@ This simple guide will show you the absolute basics of getting a <cite>pyDeltaRC
 </div>
 <section id="a-default-model">
 <h2>A default model<a class="headerlink" href="#a-default-model" title="Permalink to this headline">¶</a></h2>
-<p>You can get a model running with five simple lines of code.
+<p>You can get a model running with five simple lines of Python code. Note that you can run <em>pyDeltaRCM</em> in either a standalone script or part of an interactive session.
 First, we instantiate the main <code class="xref py py-obj docutils literal notranslate"><span class="pre">DeltaModel</span></code> model object.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyDeltaRCM</span>
 
@@ -70,6 +70,10 @@ So, we simply create a <cite>for</cite> loop, and call the <cite>update</cite> f
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">default_delta</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Additional calls to update the model can be called up until the model is finalized.</p>
 </div>
 <p>That’s it! You ran the pyDeltaRCM model for five timesteps, with just five lines of code.</p>
 <p>We can visualize the delta bed elevation, though it’s not very exciting after only five timesteps…</p>
@@ -88,8 +92,11 @@ So, we simply create a <cite>for</cite> loop, and call the <cite>update</cite> f
 <section id="the-model-with-set-parameters">
 <h2>The model with set parameters<a class="headerlink" href="#the-model-with-set-parameters" title="Permalink to this headline">¶</a></h2>
 <p>To run a simulation with a non-default set of parameters, we use a configuration file written in the YAML markup language named <cite>10min_tutorial.yaml</cite>.
-This markup file allows us to specify model boundary conditions and input and output settings.
-Anything you set in this file will override the <a class="reference internal" href="../reference/model/yaml_defaults.html"><span class="doc">default parameters</span></a> for the model.</p>
+The markup file allows us to specify model boundary conditions and input and output settings, where anything set in the file will override the <a class="reference internal" href="../reference/model/yaml_defaults.html"><span class="doc">default parameters</span></a> for the model, and anything <em>not</em> specified will take the default value.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The best practice for model configurations is to create a YAML file with only the settings you want to change specified.</p>
+</div>
 <p>The YAML configuration file is central to managing <em>pyDeltaRCM</em> simulations, so we did not create this file for you; you will need to create the YAML file yourself.
 To create the YAML file, open up your favorite plain-text editing application (e.g., gedit, notepad).
 YAML syntax is pretty simple for basic configurations, essentially amounting to each line representing a parameter-value pair, separated by a colon.
