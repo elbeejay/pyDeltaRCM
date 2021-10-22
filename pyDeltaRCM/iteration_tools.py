@@ -428,10 +428,13 @@ class iteration_tools(abc.ABC):
     def save_elapsed_time(self):
         """Record and save elapsed time to the netCDF metadata."""
         if self._save_metadata:
-            self.elapsed_time = time.time() - self.elapsed_time
+            if hasattr(self, 'elapsed_time') is False:
+                self.elapsed_time = 0.0  # base value
+            if hasattr(self, 'start_time'):
+                self.elapsed_time += time.time() - self.start_time
             self._save_var_list['meta']['elapsed_time'] = \
                 self.elapsed_time
-            _msg = 'Saved elapsed time since model initialization.'
+            _msg = 'Recorded elapsed time since model initialization.'
             self.log_info(_msg, verbosity=1)
 
     def save_the_checkpoint(self):

@@ -21,6 +21,7 @@ class Test__init__:
         p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
         _delta = DeltaModel(input_file=p)
 
+        assert hasattr(_delta, 'start_time') is True
         assert _delta.time_iter == 0.
         assert _delta._is_finalized is False
         # check that subclass parameter dictionary has been initialized

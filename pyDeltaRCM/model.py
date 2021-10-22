@@ -73,7 +73,7 @@ class DeltaModel(iteration_tools, sed_tools, water_tools,
         :doc:`/guides/user_guide`.
 
         """
-        self.elapsed_time = time.time()  # UNIX time at start
+        self.start_time = time.time()  # UNIX time at start
         self.__pyDeltaRCM_version__ = _get_version()
 
         self._time = 0.
