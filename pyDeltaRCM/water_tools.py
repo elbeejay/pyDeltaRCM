@@ -101,8 +101,10 @@ class water_tools(abc.ABC):
         _step = 0
 
         # flux from ghost node
-        self.qxn.flat[start_indices] += 1
-        self.qyn.flat[start_indices] += 0  # this could be omitted...
+        # a generalization of the inlet orientation is needed here
+        # for now, we assume flow is always in the y-direction
+        self.qxn.flat[start_indices] += 0
+        self.qyn.flat[start_indices] += 1
         self.qwn.flat[start_indices] += self.Qp_water / self._dx / 2
 
         # load the initial indices into the walk indices
@@ -159,7 +161,7 @@ class water_tools(abc.ABC):
                 new_inds,
                 _step,
                 self.L0,
-                self.CTR,
+                self.inlet_CTR,
                 self.stage - self.H_SL,
             )
             looped = looped.astype(bool)
@@ -501,9 +503,9 @@ class water_tools(abc.ABC):
 
         self.qw = (self.qx**2 + self.qy**2) ** (0.5)
 
-        self.qx[0, self.inlet] = self.qw0
-        self.qy[0, self.inlet] = 0
-        self.qw[0, self.inlet] = self.qw0
+        self.qx.flat[self.inlet] = 0
+        self.qy.flat[self.inlet] = self.qw0
+        self.qw.flat[self.inlet] = self.qw0
 
     def update_velocity_field(self) -> None:
         """Update flow velocity fields.
@@ -877,7 +879,7 @@ def _check_for_loops(
     new_inds,
     _step: int,
     L0: int,
-    CTR: int,
+    inlet_CTR: tuple,
     stage_above_SL: np.ndarray,
 ):
     """Check for loops in water parcel pathways.
@@ -974,8 +976,8 @@ def _check_for_loops(
 
                     # compute a new location for the parcel along the
                     #   mean-transport vector
-                    Fx = px0 - 1
-                    Fy = py0 - CTR
+                    Fx = px0 - inlet_CTR[0]
+                    Fy = py0 - inlet_CTR[1]
                     Fw = np.sqrt(Fx**2 + Fy**2)
 
                     # relocate the parcel along mean-transport vector

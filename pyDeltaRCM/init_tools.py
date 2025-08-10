@@ -576,7 +576,12 @@ class init_tools(abc.ABC):
         self.cell_type[: self.L0, :] = cell_land
         self.cell_type[: self.L0, channel_inds:y_channel_max] = cell_channel
 
-        self.inlet = np.array(np.unique(np.where(self.cell_type == 1)[1]))
+        inlet_rc_inds = np.where(self.cell_type == 1)
+        self.inlet = np.ravel_multi_index(
+            inlet_rc_inds, (self.L, self.W))
+        self.inlet_CTR = (
+            np.mean(inlet_rc_inds[0]), np.mean(inlet_rc_inds[1]))
+
         self.eta[:] = self.stage - self.depth
 
     def init_sediment_routers(self) -> None:

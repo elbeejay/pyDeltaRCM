@@ -100,6 +100,7 @@ class TestCheckForLoops:
              )
     stage = np.ones((10, 10))
     CTR = 4
+    inlet_CTR = (0, CTR)
     L0 = 1
 
     def test_check_for_loops_no_loops(self) -> None:
@@ -112,7 +113,7 @@ class TestCheckForLoops:
 
         new_inds, looped = water_tools._check_for_loops(
             self.free_surf_walk_inds, new_inds0.copy(), _step,
-            self.L0, self.CTR, stage_minus_SL)
+            self.L0, self.inlet_CTR, stage_minus_SL)
 
         # new inds should be same as input
         assert np.all(new_inds == new_inds0)
@@ -132,7 +133,7 @@ class TestCheckForLoops:
 
         new_inds, looped = water_tools._check_for_loops(
             self.free_surf_walk_inds, new_inds0.copy(), _step,
-            self.L0, self.CTR, stage_minus_SL)
+            self.L0, self.inlet_CTR, stage_minus_SL)
 
         # new inds should NOT be same as input
         assert new_inds[0] == new_inds0[0]
@@ -155,7 +156,7 @@ class TestCheckForLoops:
 
         new_inds, looped = water_tools._check_for_loops(
             self.free_surf_walk_inds, new_inds0.copy(), _step,
-            self.L0, self.CTR, stage_minus_SL)
+            self.L0, self.inlet_CTR, stage_minus_SL)
 
         # new inds should NOT be same as input
         assert new_inds[0] == new_inds0[0]
@@ -259,9 +260,9 @@ class TestUpdateFlowField:
         assert np.all(delta.qy[1:, :] == delta.qyn[1:, :])
 
         # check inlet boundary conditon
-        assert np.all(delta.qx[0, delta.inlet] == delta.qw0)
-        assert np.all(delta.qy[0, delta.inlet] == 0)
-        assert np.all(delta.qw[0, delta.inlet] == delta.qw0)
+        assert np.all(delta.qx.flat[delta.inlet] == 0)
+        assert np.all(delta.qy.flat[delta.inlet] == delta.qw0)
+        assert np.all(delta.qw.flat[delta.inlet] == delta.qw0)
 
         assert delta.log_info.call_count == 1
 
@@ -289,9 +290,9 @@ class TestUpdateFlowField:
         assert np.any(delta.qx != qx0)
 
         # check inlet boundary conditon
-        assert np.all(delta.qx[0, delta.inlet] == delta.qw0)
-        assert np.all(delta.qy[0, delta.inlet] == 0)
-        assert np.all(delta.qw[0, delta.inlet] == delta.qw0)
+        assert np.all(delta.qx.flat[delta.inlet] == 0)
+        assert np.all(delta.qy.flat[delta.inlet] == delta.qw0)
+        assert np.all(delta.qw.flat[delta.inlet] == delta.qw0)
 
         assert delta.log_info.call_count == 1
 
@@ -319,9 +320,9 @@ class TestUpdateFlowField:
         assert np.any(delta.qx != qx0)
 
         # check inlet boundary conditon
-        assert np.all(delta.qx[0, delta.inlet] == delta.qw0)
-        assert np.all(delta.qy[0, delta.inlet] == 0)
-        assert np.all(delta.qw[0, delta.inlet] == delta.qw0)
+        assert np.all(delta.qx.flat[delta.inlet] == 0)
+        assert np.all(delta.qy.flat[delta.inlet] == delta.qw0)
+        assert np.all(delta.qw.flat[delta.inlet] == delta.qw0)
 
         assert delta.log_info.call_count == 1
 

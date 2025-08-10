@@ -696,8 +696,8 @@ class SandRouter(BaseRouter):
         for np_sed in range(num_starts):
             self.Vp_res = self.Vp_sed
 
-            px = 0
-            py = start_indices[np_sed]
+            px, py = shared_tools.custom_unravel(
+                start_indices[np_sed], self.eta.shape)
 
             self.qs[px, py] = self.qs[px, py] + self.Vp_res / 2.0 / self._dt / self._dx
             self._route_one_parcel(px, py)
@@ -917,8 +917,8 @@ class MudRouter(BaseRouter):
         for np_sed in range(num_starts):
             self.Vp_res = self.Vp_sed
 
-            px = 0
-            py = start_indices[np_sed]
+            px, py = shared_tools.custom_unravel(
+                start_indices[np_sed], self.eta.shape)
 
             self._route_one_parcel(px, py)
 
