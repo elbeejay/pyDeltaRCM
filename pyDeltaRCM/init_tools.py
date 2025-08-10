@@ -12,16 +12,17 @@ import time as time_lib
 import yaml
 import abc
 
+from rich.logging import RichHandler
+from rich.console import Console
+
 from . import shared_tools
 from . import sed_tools
 
+
 # tools for initiating deltaRCM model domain
-
-
 class init_tools(abc.ABC):
     def init_output_infrastructure(self) -> None:
         """Initialize the output infrastructure (folder and save lists).
-
         This method is the first called in the initialization of the
         `DeltaModel`, after the configuration variables have been imported.
         """
@@ -33,44 +34,67 @@ class init_tools(abc.ABC):
         if not os.path.exists(self.prefix_abspath):
             os.makedirs(self.prefix_abspath)
             assert os.path.isdir(self.prefix_abspath)  # validate dir created
-
         self._save_fig_list = dict()  # dict of figure variables to save
         self._save_var_list = dict()  # dict of variables to save
         self._save_var_list["meta"] = dict()  # set up meta dict
 
     def init_logger(self) -> None:
         """Initialize a logger.
-
         The logger is initialized regardless of the value of ``self.verbose``.
         The level of information printed to the log depends on the verbosity
         setting.
         """
+        # timestamp for the log file
         timestamp = time_lib.strftime("%Y%m%d-%H%M%S")
-        self.logger = logging.getLogger(self.prefix_abspath + timestamp)
-        self.logger.setLevel(logging.INFO)
-
-        # create the logging file handler
-        fh = logging.FileHandler(
-            os.path.join(self.prefix_abspath, "pyDeltaRCM_" + timestamp + ".log")
+        log_filename = os.path.join(
+            self.prefix_abspath, "pyDeltaRCM_" + timestamp + ".log"
         )
-        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-        fh.setFormatter(formatter)
 
-        # add handler to logger object
-        self.logger.addHandler(fh)
+        # create a console for writing to a file
+        file_console = Console(file=open(log_filename, "wt"), record=True)
 
+        # configure the handler for the console
+        console_handler = RichHandler(
+            show_level=True, show_path=False, show_time=False, rich_tracebacks=True
+        )
+        if self.verbose == 0:
+            console_handler.setLevel(logging.WARNING)
+        elif self.verbose == 1:
+            console_handler.setLevel(logging.INFO)
+        elif self.verbose >= 2:
+            console_handler.setLevel(logging.DEBUG)
+
+        # configure the handler for the file
+        file_handler = RichHandler(
+            console=file_console,
+            show_level=True,
+            show_path=False,
+            show_time=True,
+            rich_tracebacks=True,
+        )
+        file_handler.setFormatter(logging.Formatter("%(message)s"))
+        self.logger = logging.getLogger(self.prefix_abspath + timestamp)
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.addHandler(console_handler)
+        self.logger.addHandler(file_handler)
+
+        # configure warnings logger
+        logging.captureWarnings(True)
+        warnings_logger = logging.getLogger("py.warnings")
+        warnings_logger.addHandler(console_handler)
+        warnings_logger.addHandler(file_handler)
         _msg = "Output log file initialized"
-        self.log_info(_msg, verbosity=0)
+        self.logger.info(_msg)
 
         # log attributes of the model and environment
-        self.log_info(
+        self.logger.info(
             "pyDeltaRCM version {}".format(self.__pyDeltaRCM_version__)
         )  # log the pyDeltaRCM version
-        self.log_info(
-            "Python version {}".format(sys.version), verbosity=0
+        self.logger.info(
+            "Python version {}".format(sys.version)
         )  # log the python version
-        self.log_info(
-            "Platform: {}".format(platform.platform()), verbosity=0
+        self.logger.info(
+            "Platform: {}".format(platform.platform())
         )  # log the os
 
     def import_files(self, kwargs_dict={}) -> None:
@@ -242,10 +266,10 @@ class init_tools(abc.ABC):
             *not* written to the log.
         """
         _msg = "Setting up model configuration"
-        self.log_info(_msg, verbosity=0)
+        self.logger.info(_msg)
 
         _msg = f"Model type is: {self.__class__.__name__}"
-        self.log_info(_msg, verbosity=0)
+        self.logger.info(_msg)
 
         # process the input file to attributes of the model
         for k, v in list(self._input_file_vars.items()):
@@ -255,7 +279,7 @@ class init_tools(abc.ABC):
         if not self._resume_checkpoint:
             for k, v in list(self._input_file_vars.items()):
                 _msg = "Configuration variable `{var}`: {val}".format(var=k, val=v)
-                self.log_info(_msg, verbosity=0)
+                self.logger.info(_msg)
 
     def determine_random_seed(self) -> None:
         """Set the random seed if given.
@@ -272,7 +296,7 @@ class init_tools(abc.ABC):
 
         # always write the seed to file for record and reproducability
         _msg = "Random seed is: %s " % str(self._seed)
-        self.log_info(_msg, verbosity=0)
+        self.logger.info(_msg)
 
     def create_other_variables(self) -> None:
         """Model implementation variables.
@@ -289,7 +313,7 @@ class init_tools(abc.ABC):
             :obj:`create_boundary_conditions`.
         """
         _msg = "Setting other variables"
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         self.init_Np_water = self._Np_water
         self.init_Np_sed = self._Np_sed
@@ -349,7 +373,7 @@ class init_tools(abc.ABC):
         attribute, which is simply the flattened version of that attribute.
         """
         _msg = "Setting model constants"
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         # simple constants
         self.g = 9.81  # (gravitation const.)
@@ -477,7 +501,7 @@ class init_tools(abc.ABC):
             to ensure any dependent fields are also appropriately changed.
         """
         _msg = "Creating model domain"
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         # resolve any boundary conditions
         self._hb = self.hb or self.h0  # basin depth
@@ -591,7 +615,7 @@ class init_tools(abc.ABC):
             reinitialize the sediment routers (i.e., rerun this method)
         """
         _msg = "Initializing sediment routers"
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         # initialize the MudRouter object
         self._mr = sed_tools.MudRouter(
@@ -647,7 +671,7 @@ class init_tools(abc.ABC):
 
         """
         _msg = "Initializing output NetCDF4 file"
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         # set standard/default metadata values in the dict structure
         if self._save_metadata:
@@ -659,7 +683,7 @@ class init_tools(abc.ABC):
 
             file_path = os.path.join(directory, filename)
             _msg = "Target output NetCDF4 file: {file}".format(file=file_path)
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
             if (os.path.exists(file_path)) and (self._clobber_netcdf is False):
                 raise FileExistsError(
@@ -759,7 +783,7 @@ class init_tools(abc.ABC):
                     )
 
             _msg = "Output netCDF file created"
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
     def init_subsidence(self) -> None:
         """Initialize subsidence pattern.
@@ -775,7 +799,7 @@ class init_tools(abc.ABC):
 
         """
         _msg = "Initializing subsidence"
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         if self._toggle_subsidence:
             self.subsidence_mask = np.ones((self.L, self.W), dtype=bool)
@@ -916,16 +940,16 @@ class init_tools(abc.ABC):
             Default is `False`.
         """
         _msg = "Loading from checkpoint."
-        self.log_info(_msg, verbosity=0)
+        self.logger.info(_msg)
 
         _msg = "Locating checkpoint file"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
         ckp_file = os.path.join(self._checkpoint_folder, "checkpoint.npz")
         checkpoint = np.load(ckp_file, allow_pickle=True)
 
         # write saved variables back to the model
         _msg = "Loading variables and grids into model"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # load time and counter vars
         self._time = float(checkpoint["time"])
@@ -950,7 +974,7 @@ class init_tools(abc.ABC):
 
         # load and set random state to continue as if run hadn't stopped
         _msg = "Loading random state"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
         rng_state = tuple(checkpoint["rng_state"])
         shared_tools.set_random_state(rng_state)
 
@@ -987,13 +1011,13 @@ class init_tools(abc.ABC):
                 # if not open elsewhere, then proceed
                 # rename the old netCDF4 file
                 _msg = "Renaming old NetCDF4 output file"
-                self.log_info(_msg, verbosity=2)
+                self.logger.debug(_msg)
                 _tmp_name = os.path.join(self.prefix, "old_pyDeltaRCM_output.nc")
                 os.rename(file_path, _tmp_name)
 
                 # write dims / attributes / variables to new netCDF file
                 _msg = "Creating NetCDF4 output file"
-                self.log_info(_msg, verbosity=2)
+                self.logger.debug(_msg)
 
                 # populate default metadata list
                 if self._save_metadata:
@@ -1038,4 +1062,4 @@ class init_tools(abc.ABC):
                 os.remove(_tmp_name)
 
         _msg = "Successfully loaded checkpoint."
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)

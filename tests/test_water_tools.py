@@ -21,7 +21,7 @@ class TestWaterRoute:
         _delta = DeltaModel(input_file=p)
 
         # mock top-level methods
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
         _delta.init_water_iteration = mock.MagicMock()
         _delta.run_water_iteration = mock.MagicMock()
         _delta.compute_free_surface = mock.MagicMock()
@@ -31,7 +31,7 @@ class TestWaterRoute:
         _delta.route_water()
 
         # methods called
-        assert (_delta.log_info.called is True)
+        assert (_delta.logger.debug.called is True)
         assert (_delta.init_water_iteration.call_count == _delta._itermax)
         assert (_delta.run_water_iteration.call_count == _delta._itermax)
         assert (_delta.compute_free_surface.call_count == _delta._itermax)
@@ -72,7 +72,7 @@ class TestInitWaterIteration:
         p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
         delta = DeltaModel(input_file=p)
 
-        delta.log_info = mock.MagicMock()
+        delta.logger = mock.MagicMock()
 
         # run the method
         delta.init_water_iteration()
@@ -86,7 +86,7 @@ class TestInitWaterIteration:
         assert np.all(delta.sfc_visit == 0)
         assert np.all(delta.sfc_sum == 0)
 
-        assert delta.log_info.call_count == 1
+        assert delta.logger.debug.call_count == 1
 
 
 class TestCheckForLoops:
@@ -245,7 +245,7 @@ class TestUpdateFlowField:
         delta = DeltaModel(input_file=p)
 
         # mock the log
-        delta.log_info = mock.MagicMock()
+        delta.logger = mock.MagicMock()
 
         # conditions are zero already, but...
         delta._time_iter = 0
@@ -263,7 +263,7 @@ class TestUpdateFlowField:
         assert np.all(delta.qy[0, delta.inlet] == 0)
         assert np.all(delta.qw[0, delta.inlet] == delta.qw0)
 
-        assert delta.log_info.call_count == 1
+        assert delta.logger.debug.call_count == 1
 
     def test_update_flow_field_time1_iteration0(self, tmp_path: Path) -> None:
         """
@@ -274,7 +274,7 @@ class TestUpdateFlowField:
         p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
         delta = DeltaModel(input_file=p)
 
-        delta.log_info = mock.MagicMock()
+        delta.logger = mock.MagicMock()
 
         # conditions are zero already, but...
         delta._time_iter = 1
@@ -293,7 +293,7 @@ class TestUpdateFlowField:
         assert np.all(delta.qy[0, delta.inlet] == 0)
         assert np.all(delta.qw[0, delta.inlet] == delta.qw0)
 
-        assert delta.log_info.call_count == 1
+        assert delta.logger.debug.call_count == 1
 
     def test_update_flow_field_time1_iteration1(self, tmp_path: Path) -> None:
         """
@@ -304,7 +304,7 @@ class TestUpdateFlowField:
         p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
         delta = DeltaModel(input_file=p)
 
-        delta.log_info = mock.MagicMock()
+        delta.logger = mock.MagicMock()
 
         # conditions are zero already, but...
         delta._time_iter = 1
@@ -323,7 +323,7 @@ class TestUpdateFlowField:
         assert np.all(delta.qy[0, delta.inlet] == 0)
         assert np.all(delta.qw[0, delta.inlet] == delta.qw0)
 
-        assert delta.log_info.call_count == 1
+        assert delta.logger.debug.call_count == 1
 
     def test_update_velocity_field(self, tmp_path: Path) -> None:
         """
@@ -333,7 +333,7 @@ class TestUpdateFlowField:
         p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
         delta = DeltaModel(input_file=p)
 
-        delta.log_info = mock.MagicMock()
+        delta.logger = mock.MagicMock()
 
         # run the method
         delta.update_velocity_field()
@@ -345,4 +345,4 @@ class TestUpdateFlowField:
         assert np.all(delta.ux[dmask] != 0)
         assert np.all(delta.uw[dmask] != 0)
 
-        assert delta.log_info.call_count == 1
+        assert delta.logger.debug.call_count == 1

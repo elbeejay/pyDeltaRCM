@@ -4,3 +4,4 @@ netCDF4
 pyyaml>=5.1
 numba
 numpy
+rich

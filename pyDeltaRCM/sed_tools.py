@@ -27,24 +27,24 @@ class sed_tools(abc.ABC):
             * :obj:`route_all_mud_parcels`
         """
         _msg = "Beginning sediment iteration"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # initialize the relevant fields and parcel trackers
         self.hook_init_sediment_iteration()
         self.init_sediment_iteration()
 
         _msg = "Beginning sand parcel routing"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
         self.hook_route_all_sand_parcels()
         self.route_all_sand_parcels()
 
         _msg = "Beginning topographic diffusion"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
         self.hook_topo_diffusion()
         self.topo_diffusion()
 
         _msg = "Beginning mud parcel routing"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
         self.hook_route_all_mud_parcels()
         self.route_all_mud_parcels()
 
@@ -66,7 +66,7 @@ class sed_tools(abc.ABC):
         Clear and pad fields in preparation for iterating parcels.
         """
         _msg = "Initializing water iteration"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # pad with edge on depth
         self.pad_depth = np.pad(self.depth, 1, "edge")
@@ -116,7 +116,7 @@ class sed_tools(abc.ABC):
         +-------------------------------------------+------------------------------------------------+
         """
         _msg = "Determining sand parcel start indicies"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         num_starts = int(self._Np_sed * self._f_bedload)
         inlet_weights = self.get_inlet_weights_sediment(parcel_type="sand")
@@ -125,7 +125,7 @@ class sed_tools(abc.ABC):
         )
 
         _msg = "Supplying model state to SandRouter for iteration"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self._sr.run(
             start_indices,
@@ -149,7 +149,7 @@ class sed_tools(abc.ABC):
         # you attempt to drop in a replacement SandRouter, you will need to
         # update these fields!!
         _msg = "Updating DeltaModel based on SandRouter change"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self.Vp_dep_mud = self._sr.Vp_dep_mud
         self.Vp_dep_sand = self._sr.Vp_dep_sand
@@ -184,7 +184,7 @@ class sed_tools(abc.ABC):
         +-------------------------------------------+------------------------------------------------+
         """
         _msg = "Determining mud parcel start indicies"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         num_starts = int(self._Np_sed * (1 - self._f_bedload))
         inlet_weights = self.get_inlet_weights_sediment(parcel_type="mud")
@@ -193,7 +193,7 @@ class sed_tools(abc.ABC):
         )
 
         _msg = "Supplying model state to MudRouter for iteration"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self._mr.run(
             start_indices,
@@ -216,7 +216,7 @@ class sed_tools(abc.ABC):
         # you attempt to drop in a replacement MudRouter, you will need to
         # update these fields!!
         _msg = "Updating DeltaModel based on MudRouter change"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self.Vp_dep_mud = self._mr.Vp_dep_mud
         self.Vp_dep_sand = self._mr.Vp_dep_sand

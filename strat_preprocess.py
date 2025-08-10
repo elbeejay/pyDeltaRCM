@@ -1,3 +1,5 @@
+import logging
+
 import numpy as np
 import scipy as sp
 from PIL import Image, ImageDraw
@@ -49,7 +51,7 @@ for j in range(dx):
         mask[img > 0] = img[img > 0]
         
     stratigraphy[:,j,:] = mask
-    
-print('Saving stratigraphy...')  
+
+logging.info('Saving stratigraphy...')
 np.save('deltaRCM_Output/stratigraphy.npy', stratigraphy)
-print('Done')
+logging.info('Done')

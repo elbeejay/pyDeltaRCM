@@ -286,7 +286,7 @@ class TestTimingOutputData:
         _delta = DeltaModel(input_file=p)
 
         # mock the top-level
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
         _delta.output_data = mock.MagicMock()
         _delta.output_checkpoint = mock.MagicMock()
 
@@ -306,7 +306,7 @@ class TestTimingOutputData:
 
         # assert calls
         #   should only hit top-levels
-        assert _delta.log_info.call_count == 2
+        assert _delta.logger.info.call_count == 2
         assert _delta.output_data.call_count == 0
         assert _delta.output_checkpoint.call_count == 0
 

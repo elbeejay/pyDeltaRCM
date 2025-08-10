@@ -18,7 +18,7 @@ class TestSedimentRoute:
         _delta = DeltaModel(input_file=p)
 
         # mock top-level methods
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
         _delta.init_sediment_iteration = mock.MagicMock()
         _delta.route_all_sand_parcels = mock.MagicMock()
         _delta.topo_diffusion = mock.MagicMock()
@@ -28,7 +28,7 @@ class TestSedimentRoute:
         _delta.route_sediment()
 
         # methods called
-        assert (_delta.log_info.call_count == 4)
+        assert (_delta.logger.debug.call_count == 4)
         assert (_delta.init_sediment_iteration.called is True)
         assert (_delta.route_all_sand_parcels.called is True)
         assert (_delta.topo_diffusion.called is True)
@@ -85,7 +85,7 @@ class TestRouteAllSandParcels:
         _delta = DeltaModel(input_file=p)
 
         # mock top-level methods / objects
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
         _delta._sr = mock.MagicMock()
 
         # mock the shared tools start indices
@@ -102,7 +102,7 @@ class TestRouteAllSandParcels:
 
         # methods called
         assert (_delta._sr.run.call_count == 1)
-        assert (_delta.log_info.call_count == 3)
+        assert (_delta.logger.debug.call_count == 3)
 
         # stop the patch
         patcher.stop()
@@ -118,7 +118,7 @@ class TestRouteAllMudParcels:
         _delta = DeltaModel(input_file=p)
 
         # mock top-level methods / objects
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
         _delta._mr = mock.MagicMock()
 
         # mock the shared tools start indices
@@ -135,7 +135,7 @@ class TestRouteAllMudParcels:
 
         # methods called
         assert (_delta._mr.run.call_count == 1)
-        assert (_delta.log_info.call_count == 3)
+        assert (_delta.logger.debug.call_count == 3)
 
         # stop the patch
         patcher.stop()

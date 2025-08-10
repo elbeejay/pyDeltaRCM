@@ -80,7 +80,7 @@ class iteration_tools(abc.ABC):
         if self._toggle_subsidence:
             if self._time >= self._start_subsidence:
                 _msg = "Applying subsidence"
-                self.log_info(_msg, verbosity=1)
+                self.logger.info(_msg)
 
                 self.eta[:] = self.eta - self.sigma
 
@@ -100,7 +100,7 @@ class iteration_tools(abc.ABC):
 
         """
         _msg = "Finalizing timestep"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self.flooding_correction()
         self.stage[:] = np.maximum(self.stage, self._H_SL)
@@ -114,20 +114,6 @@ class iteration_tools(abc.ABC):
 
         self.H_SL = self._H_SL + self._SLR * self._dt
 
-    def log_info(self, message: str, verbosity: int = 0) -> None:
-        """Log message dependent on verbosity settings.
-
-        Parameters
-        ----------
-        message : :obj:`str`
-            Message string to write to the log as info.
-
-        verbosity : :obj:`int`, optional
-            Verbosity threshold, whether to write the message to the log or
-            not. Default value is `0`, or i.e. to always log.
-        """
-        if self._verbose >= verbosity:
-            self.logger.info(message)
 
     def log_model_time(self) -> None:
         """Log the time of the model.
@@ -139,8 +125,6 @@ class iteration_tools(abc.ABC):
             time=self._time, timestep=self._time_iter, digits=1
         )
         self.logger.info(_timemsg)
-        if self._verbose > 0:
-            print(_timemsg)
 
     def output_data(self) -> None:
         """Output grids and figures if needed."""
@@ -166,7 +150,7 @@ class iteration_tools(abc.ABC):
         if self._save_time_since_checkpoint >= self.checkpoint_dt:
             if self._save_checkpoint:
                 _msg = "Saving checkpoint"
-                self.log_info(_msg, verbosity=1)
+                self.logger.info(_msg)
 
                 self.save_the_checkpoint()
 
@@ -192,7 +176,7 @@ class iteration_tools(abc.ABC):
 
         """
         _msg = "Computing bed sand fraction"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # layer attributes at time t
         actlyr_thick = self._active_layer_thickness
@@ -251,7 +235,7 @@ class iteration_tools(abc.ABC):
         save_idx = self.save_iter
 
         _msg = " ".join(("Saving data to output file:", str(save_idx).zfill(5)))
-        self.log_info(_msg, verbosity=1)
+        self.logger.info(_msg)
 
         if self._save_metadata or self._save_any_grids:
             self.output_netcdf.variables["time"][save_idx] = self._time
@@ -259,7 +243,7 @@ class iteration_tools(abc.ABC):
         # ------------------ Figures ------------------
         if len(self._save_fig_list) > 0:
             _msg = "Saving figures"
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
             for f in self._save_fig_list.keys():
                 _attr = getattr(self, self._save_fig_list[f][0])
@@ -297,7 +281,7 @@ class iteration_tools(abc.ABC):
         # ------------------ grids ------------------
         if self._save_any_grids:
             _msg = "Saving grids"
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
             _var_list = list(self._save_var_list.keys())
             _var_list.remove("meta")
@@ -309,7 +293,7 @@ class iteration_tools(abc.ABC):
         # ------------------ metadata ------------------
         if self._save_metadata:
             _msg = "Saving metadata"
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
             for _val in self._save_var_list["meta"].keys():
                 # use knowledge of time-varying values to save them
@@ -319,7 +303,7 @@ class iteration_tools(abc.ABC):
         # -------------------- sync --------------------
         if self._save_metadata or self._save_any_grids:
             _msg = "Syncing data to output file"
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
             self.output_netcdf.sync()
 
@@ -431,7 +415,7 @@ class iteration_tools(abc.ABC):
 
         """
         _msg = " ".join(["saving", str(var_name), "grid"])
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
         try:
             self.output_netcdf.variables[var_name][save_idx, :, :] = var
         except Exception as e:

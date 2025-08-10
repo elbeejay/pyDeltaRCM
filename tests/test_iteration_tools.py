@@ -220,14 +220,14 @@ class TestOutputCheckpoint:
 
         # mock the actual save checkpoint function to see if it was called
         _delta.save_the_checkpoint = mock.MagicMock()
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
 
         # run the output checkpoint func
         _delta.output_checkpoint()
 
         # assertions
         assert _delta.save_the_checkpoint.call_count == 1
-        assert _delta.log_info.call_count == 1
+        assert _delta.logger.info.call_count == 1
 
     def test_save_a_checkpoint_checkpoint_true_timewarning(
         self, tmp_path: Path
@@ -568,8 +568,8 @@ class TestSaveGrids:
         )
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
         assert os.path.isfile(exp_path_nc)
@@ -583,7 +583,7 @@ class TestSaveGrids:
         ds = netCDF4.Dataset(exp_path_nc, "r", format="NETCDF4")
 
         # assertions
-        assert _delta.log_info.call_count == 6
+        assert _delta.logger.debug.call_count == 6
         _arr = ds.variables["eta"]
         assert _arr.shape[1] == _delta.eta.shape[0]
         assert _arr.shape[2] == _delta.eta.shape[1]
@@ -595,8 +595,8 @@ class TestSaveGrids:
         )
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
         assert os.path.isfile(exp_path_nc)
@@ -610,7 +610,7 @@ class TestSaveGrids:
         ds = netCDF4.Dataset(exp_path_nc, "r", format="NETCDF4")
 
         # assertions
-        assert _delta.log_info.call_count == 6
+        assert _delta.logger.debug.call_count == 6
         _arr = ds.variables["depth"]
         assert _arr.shape[1] == _delta.depth.shape[0]
         assert _arr.shape[2] == _delta.depth.shape[1]
@@ -622,8 +622,8 @@ class TestSaveGrids:
         )
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
         assert os.path.isfile(exp_path_nc)
@@ -637,7 +637,7 @@ class TestSaveGrids:
         ds = netCDF4.Dataset(exp_path_nc, "r", format="NETCDF4")
 
         # assertions
-        assert _delta.log_info.call_count == 6
+        assert _delta.logger.debug.call_count == 6
         _arr = ds.variables["velocity"]
         assert _arr.shape[1] == _delta.uw.shape[0]
         assert _arr.shape[2] == _delta.uw.shape[1]
@@ -649,8 +649,8 @@ class TestSaveGrids:
         )
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
         assert os.path.isfile(exp_path_nc)
@@ -664,7 +664,7 @@ class TestSaveGrids:
         ds = netCDF4.Dataset(exp_path_nc, "r", format="NETCDF4")
 
         # assertions
-        assert _delta.log_info.call_count == 6
+        assert _delta.logger.debug.call_count == 6
         _arr = ds.variables["stage"]
         assert _arr.shape[1] == _delta.stage.shape[0]
         assert _arr.shape[2] == _delta.stage.shape[1]
@@ -676,8 +676,8 @@ class TestSaveGrids:
         )
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
         assert os.path.isfile(exp_path_nc)
@@ -691,7 +691,7 @@ class TestSaveGrids:
         ds = netCDF4.Dataset(exp_path_nc, "r", format="NETCDF4")
 
         # assertions
-        assert _delta.log_info.call_count == 6
+        assert _delta.logger.debug.call_count == 6
         _arr = ds.variables["discharge"]
         assert _arr.shape[1] == _delta.qw.shape[0]
         assert _arr.shape[2] == _delta.qw.shape[1]
@@ -703,8 +703,8 @@ class TestSaveGrids:
         )
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
         assert os.path.isfile(exp_path_nc)
@@ -718,7 +718,7 @@ class TestSaveGrids:
         ds = netCDF4.Dataset(exp_path_nc, "r", format="NETCDF4")
 
         # assertions
-        assert _delta.log_info.call_count == 6
+        assert _delta.logger.debug.call_count == 6
         _arr = ds.variables["sedflux"]
         assert _arr.shape[1] == _delta.qs.shape[0]
         assert _arr.shape[2] == _delta.qs.shape[1]
@@ -728,8 +728,8 @@ class TestSaveGrids:
         p = utilities.yaml_from_dict(tmp_path, "input.yaml", {"save_dt": 1})
         _delta = DeltaModel(input_file=p)
 
-        # mock the log_info
-        _delta.log_info = mock.MagicMock()
+        # mock the logger
+        _delta.logger = mock.MagicMock()
 
         # no netcdf will be created
         exp_path_nc = os.path.join(tmp_path / "out_dir", "pyDeltaRCM_output.nc")
@@ -740,4 +740,4 @@ class TestSaveGrids:
             _delta.save_grids("sedflux", _delta.qs, _delta._save_iter)
 
         # assert log was called when exception was raised
-        assert _delta.log_info.call_count == 1
+        assert _delta.logger.error.call_count == 1

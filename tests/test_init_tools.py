@@ -205,7 +205,6 @@ class TestLoadCheckpoint:
         _delta = DeltaModel(input_file=p)
 
         # make mocks
-        _delta.log_info = mock.MagicMock()
         _delta.logger = mock.MagicMock()
         _delta.init_output_file = mock.MagicMock()
 
@@ -229,9 +228,7 @@ class TestLoadCheckpoint:
         assert np.all(_delta.eta == _eta0)
 
         # assertions on function calls
-        _call = [mock.call("Renaming old NetCDF4 output file", verbosity=2)]
-        _delta.log_info.assert_has_calls(_call, any_order=True)
-        _delta.logger.assert_not_called()
+        _delta.logger.debug.assert_any_call("Renaming old NetCDF4 output file")
         _delta.init_output_file.assert_not_called()
         patched.assert_called()
 
@@ -246,7 +243,6 @@ class TestLoadCheckpoint:
         _delta = DeltaModel(input_file=p)
 
         # make mocks
-        _delta.log_info = mock.MagicMock()
         _delta.logger = mock.MagicMock()
         _delta.init_output_file = mock.MagicMock()
 
@@ -266,8 +262,7 @@ class TestLoadCheckpoint:
         assert np.all(_delta.eta == _eta0)
 
         # assertions on function calls
-        _delta.log_info.assert_called()
-        _delta.logger.assert_not_called()
+        _delta.logger.info.assert_called()
         _delta.init_output_file.assert_not_called()
         patched.assert_called()
 

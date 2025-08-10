@@ -21,7 +21,7 @@ class water_tools(abc.ABC):
             * :obj:`finalize_water_iteration`
         """
         _msg = "Beginning water iteration"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         for iteration in range(self._itermax):
             # initialize the relevant fields and parcel trackers
@@ -43,7 +43,7 @@ class water_tools(abc.ABC):
     def init_water_iteration(self) -> None:
         """Init the water iteration routine."""
         _msg = "Initializing water iteration"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self.qxn[:] = 0
         self.qyn[:] = 0
@@ -89,7 +89,7 @@ class water_tools(abc.ABC):
         .. plot:: water_tools/run_water_iteration.py
         """
         _msg = "Beginning stepping of water parcels"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # configure the starting indices for each parcel
         inlet_weights = self.get_inlet_weights_water()
@@ -260,7 +260,7 @@ class water_tools(abc.ABC):
 
         """
         _msg = "Computing free surface from water parcels"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         self.sfc_visit, self.sfc_sum = _accumulate_free_surface_walks(
             self.free_surf_walk_inds,
@@ -307,7 +307,7 @@ class water_tools(abc.ABC):
         underrelaxation. Finally, a :obj:`flooding_correction` is applied.
         """
         _msg = "Smoothing and finalizing free surface"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # smooth newly calculated free surface
         Hsmth = _smooth_free_surface(
@@ -329,7 +329,7 @@ class water_tools(abc.ABC):
         Clean up at end of water iteration
         """
         _msg = "Finalizing stepping of water parcels"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # apply boundary for water surface
         #     Note: not in Matlab implementation
@@ -354,7 +354,7 @@ class water_tools(abc.ABC):
         """
         if it >= self.free_surf_walk_inds.shape[1]:
             _msg = "Increasing size of self.free_surf_walk_inds"
-            self.log_info(_msg, verbosity=2)
+            self.logger.debug(_msg)
 
             indices_blank = np.zeros(
                 (int(self._Np_water), int(self.stepmax / 4)), dtype=int
@@ -391,7 +391,7 @@ class water_tools(abc.ABC):
         .. plot:: water_tools/water_weights_examples.py
         """
         _msg = "Computing water weight array"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # compiling the water weight array is handled inside a jitted
         #     function below. ~4x faster.
@@ -426,7 +426,7 @@ class water_tools(abc.ABC):
         Method is called after one set of water parcel steps.
         """
         _msg = "Updating flux fields after single parcel step"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         if update_current:
             self.qxn = _update_dirQfield(
@@ -462,7 +462,7 @@ class water_tools(abc.ABC):
             Unraveled indicies of parcels.
         """
         _msg = "Checking stepped parcels against boundary location"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         # inds[self.free_surf_flag == 2] = 0
         boundary = self.cell_type.flat[inds] == -1
@@ -475,7 +475,7 @@ class water_tools(abc.ABC):
         iteration.
         """
         _msg = "Updating discharge fields after parcel stepping"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         dloc = (self.qxn**2 + self.qyn**2) ** (0.5)
 
@@ -512,7 +512,7 @@ class water_tools(abc.ABC):
         iteration.
         """
         _msg = "Updating flow velocity fields after parcel stepping"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         mask = np.logical_and((self.depth > self.dry_depth), (self.qw > 0))
 
@@ -533,7 +533,7 @@ class water_tools(abc.ABC):
         If it is, flood the dry cell.
         """
         _msg = "Computing flooding correction"
-        self.log_info(_msg, verbosity=2)
+        self.logger.debug(_msg)
 
         wet_mask = self.depth > self.dry_depth
         wet_mask_nh = self.get_wet_mask_nh()

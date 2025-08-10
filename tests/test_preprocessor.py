@@ -388,7 +388,7 @@ class TestPreprocessorMatrixJobsSetups:
                            match=r'You cannot specify "out_dir" as .*'):
             _ = preprocessor.Preprocessor(input_file=p, timesteps=3)
 
-    def test_python_highlevelapi_matrix_verbosity(self, tmp_path: Path, capsys) -> None:
+    def test_python_highlevelapi_matrix_verbosity(self, tmp_path: Path, caplog) -> None:
         file_name = 'user_parameters.yaml'
         p, f = utilities.create_temporary_file(tmp_path, file_name)
         utilities.write_parameter_to_file(f, 'verbose', 1)
@@ -399,17 +399,16 @@ class TestPreprocessorMatrixJobsSetups:
         f.close()
         _ = preprocessor.Preprocessor(input_file=p, timesteps=3)
 
-        captd = capsys.readouterr()
-        assert 'Timestep: 0.0' not in captd.out
-        assert 'Writing YAML file for job 0' in captd.out
-        assert 'Writing YAML file for job 1' in captd.out
-        assert 'Writing YAML file for job 2' in captd.out
-        assert 'Writing YAML file for job 3' in captd.out
-        assert 'Writing YAML file for job 4' in captd.out
-        assert 'Writing YAML file for job 5' in captd.out
-        assert 'Matrix expansion:' in captd.out
-        assert '  dims 2' in captd.out
-        assert '  jobs 6' in captd.out
+        assert 'Timestep: 0.0' not in caplog.text
+        assert 'Writing YAML file for job 0' in caplog.text
+        assert 'Writing YAML file for job 1' in caplog.text
+        assert 'Writing YAML file for job 2' in caplog.text
+        assert 'Writing YAML file for job 3' in caplog.text
+        assert 'Writing YAML file for job 4' in caplog.text
+        assert 'Writing YAML file for job 5' in caplog.text
+        assert 'Matrix expansion:' in caplog.text
+        assert '  dims 2' in caplog.text
+        assert '  jobs 6' in caplog.text
 
 
 class TestPreprocessorSetJobsSetups:

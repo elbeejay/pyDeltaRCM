@@ -7,6 +7,7 @@ import platform
 import time
 import warnings
 import yaml
+import logging
 from pathlib import Path
 from typing import Dict, Optional, Type, List, Union
 
@@ -50,6 +51,9 @@ class BasePreprocessor(abc.ABC):
         self._dryrun = False
 
         self._is_completed = False
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+        self.logger.setLevel(logging.INFO)
 
     @property
     def file_list(self) -> List[Path]:
@@ -351,7 +355,7 @@ class BasePreprocessor(abc.ABC):
         dims = len(_set[0])
 
         if self.verbose > 0:
-            print(
+            self.logger.info(
                 ("Set expansion:\n" + "  dims {_dims}\n" + "  jobs {_jobs}").format(
                     _dims=dims, _jobs=jobs
                 )
@@ -447,7 +451,7 @@ class BasePreprocessor(abc.ABC):
         _fixed_config = self.config_dict.copy()  # fixed config dict
 
         if self.verbose > 0:
-            print(
+            self.logger.info(
                 ("Matrix expansion:\n" + "  dims {_dims}\n" + "  jobs {_jobs}").format(
                     _dims=dims, _jobs=jobs
                 )
@@ -505,7 +509,7 @@ class BasePreprocessor(abc.ABC):
             # write out the job specific yaml file
             # ith_p = self._write_yaml_config(c, config)
             if self.verbose > 0:
-                print("Writing YAML file for job " + str(int(c)))
+                self.logger.info("Writing YAML file for job " + str(int(c)))
 
             ith_dir = Path(config["out_dir"])  # job output folder
             ith_id = ith_dir.parts[-1]  # job id
@@ -587,7 +591,7 @@ class BasePreprocessor(abc.ABC):
 
             _msg = "Running %g parallel jobs" % num_parallel_processes
             if self.verbose >= 1:
-                print(_msg)
+                self.logger.info(_msg)
 
             # use Semaphore to limit number of concurrent Job
             s = multiprocessing.Semaphore(num_parallel_processes)
@@ -629,9 +633,9 @@ class BasePreprocessor(abc.ABC):
             while not q.empty():
                 gotq = q.get()
                 if gotq["code"] == 1:
-                    print("Job {job} ended in error:\n {msg}".format_map(gotq))
+                    self.logger.error("Job {job} ended in error:\n {msg}".format_map(gotq))
                 else:
-                    print(
+                    self.logger.info(
                         "Job {job} returned code {code} "
                         "for stage {stage}.".format_map(gotq)
                     )
@@ -660,7 +664,7 @@ class BasePreprocessor(abc.ABC):
             # run the job(s)
             for i, job in enumerate(self._job_list):
                 if self.verbose > 0:
-                    print("Starting job %s" % str(i))
+                    self.logger.info("Starting job %s" % str(i))
                 job.run()
 
         # if the parallel flag is a junk value

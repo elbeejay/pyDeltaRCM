@@ -418,7 +418,7 @@ class TestFinalize:
         p = utilities.yaml_from_dict(tmp_path, 'input.yaml')
         _delta = DeltaModel(input_file=p)
 
-        _delta.log_info = mock.MagicMock()
+        _delta.logger = mock.MagicMock()
         _delta.output_data = mock.MagicMock()
         _delta.output_checkpoint = mock.MagicMock()
 
@@ -427,7 +427,7 @@ class TestFinalize:
 
         # assert calls
         #  should hit all options since no saves
-        assert _delta.log_info.call_count == 2
+        assert _delta.logger.info.call_count == 2
 
         # these were originally included in `finalize`, but no longer.
         #   the checks for no call are here to ensure we don't revert

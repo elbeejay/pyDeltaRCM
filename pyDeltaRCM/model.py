@@ -143,7 +143,7 @@ class DeltaModel(
                 self.output_checkpoint()
 
         _msg = "Model initialization complete"
-        self.log_info(_msg)
+        self.logger.info(_msg)
         self.log_model_time()
 
     def update(self) -> None:
@@ -228,7 +228,7 @@ class DeltaModel(
 
         """
         _msg = "Finalize the model run"
-        self.log_info(_msg)
+        self.logger.info(_msg)
 
         if self._is_finalized:
             raise RuntimeError("Cannot finalize model, " "model already finalized!")
@@ -236,9 +236,9 @@ class DeltaModel(
         try:
             self.output_netcdf.close()
             _msg = "Closed output NetCDF4 file"
-            self.log_info(_msg, verbosity=1)
+            self.logger.info(_msg)
         except AttributeError:
-            self.log_info("No output NetCDF4 file to close.")
+            self.logger.info("No output NetCDF4 file to close.")
         except Exception as e:
             self.logger.error("Failed to close output NetCDF4 file")
             self.logger.exception(e)
