@@ -330,6 +330,7 @@ class init_tools(abc.ABC):
             self._save_metadata = True
 
         self._is_finalized = False
+        self.lost_sediment_volume = 0.0
 
     def set_constants(self) -> None:
         """Set the model constants.

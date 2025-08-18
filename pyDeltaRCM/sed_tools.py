@@ -127,7 +127,7 @@ class sed_tools(abc.ABC):
         _msg = "Supplying model state to SandRouter for iteration"
         self.log_info(_msg, verbosity=2)
 
-        self._sr.run(
+        lost_sediment = self._sr.run(
             start_indices,
             self.eta,
             self.stage,
@@ -144,6 +144,7 @@ class sed_tools(abc.ABC):
             self.qs,
             self.mod_sed_weight,
         )
+        self.lost_sediment_volume += lost_sediment
 
         # These are the variables updated at the end of the `SandRouter`. If
         # you attempt to drop in a replacement SandRouter, you will need to
@@ -195,7 +196,7 @@ class sed_tools(abc.ABC):
         _msg = "Supplying model state to MudRouter for iteration"
         self.log_info(_msg, verbosity=2)
 
-        self._mr.run(
+        lost_sediment = self._mr.run(
             start_indices,
             self.eta,
             self.stage,
@@ -211,6 +212,7 @@ class sed_tools(abc.ABC):
             self.qy,
             self.mod_sed_weight,
         )
+        self.lost_sediment_volume += lost_sediment
 
         # These are the variables updated at the end of the `MudRouter`. If
         # you attempt to drop in a replacement MudRouter, you will need to
@@ -643,7 +645,7 @@ class SandRouter(BaseRouter):
         qy,
         qs,
         mod_sed_weight,
-    ) -> None:
+    ) -> float:
         """The main function to route and deposit/erode sand parcels.
 
         Algorithm is to:
@@ -692,6 +694,7 @@ class SandRouter(BaseRouter):
         self.qy = qy
         self.qs = qs
 
+        lost_volume = 0.0
         num_starts = start_indices.shape[0]
         for np_sed in range(num_starts):
             self.Vp_res = self.Vp_sed
@@ -700,9 +703,10 @@ class SandRouter(BaseRouter):
             py = start_indices[np_sed]
 
             self.qs[px, py] = self.qs[px, py] + self.Vp_res / 2.0 / self._dt / self._dx
-            self._route_one_parcel(px, py)
+            lost_volume += self._route_one_parcel(px, py)
+        return lost_volume
 
-    def _route_one_parcel(self, px: int, py: int) -> None:
+    def _route_one_parcel(self, px: int, py: int) -> float:
         """Route one parcel.
 
         Algorithm is to:
@@ -732,6 +736,7 @@ class SandRouter(BaseRouter):
         """
         it = 0
         sed_continue = True
+        lost_volume = 0.0
 
         while sed_continue:
             px0 = px
@@ -748,9 +753,12 @@ class SandRouter(BaseRouter):
 
             it += 1
             if self.cell_type[px, py] == -1:  # check for "edge" cell
+                lost_volume = self.Vp_res
                 sed_continue = False  # kill the `while` loop
             if it == self.stepmax:
+                lost_volume = self.Vp_res
                 sed_continue = False
+        return lost_volume
 
     def _partition_sediment(
         self, px0: int, py0: int, px: int, py: int, dist: float
@@ -893,7 +901,7 @@ class MudRouter(BaseRouter):
         qx,
         qy,
         mod_sed_weight,
-    ) -> None:
+    ) -> float:
         """The main function to route and deposit/erode mud parcels."""
 
         self.eta = eta
@@ -913,6 +921,7 @@ class MudRouter(BaseRouter):
         self.qx = qx
         self.qy = qy
 
+        lost_volume = 0.0
         num_starts = start_indices.shape[0]
         for np_sed in range(num_starts):
             self.Vp_res = self.Vp_sed
@@ -920,12 +929,14 @@ class MudRouter(BaseRouter):
             px = 0
             py = start_indices[np_sed]
 
-            self._route_one_parcel(px, py)
+            lost_volume += self._route_one_parcel(px, py)
+        return lost_volume
 
-    def _route_one_parcel(self, px: int, py: int) -> None:
+    def _route_one_parcel(self, px: int, py: int) -> float:
         """Route one parcel."""
         it = 0
         sed_continue = True
+        lost_volume = 0.0
 
         while sed_continue:
             # Choose the next location for the parcel to travel
@@ -938,9 +949,12 @@ class MudRouter(BaseRouter):
 
             it += 1
             if self.cell_type[px, py] == -1:  # check for "edge" cell
+                lost_volume = self.Vp_res
                 sed_continue = False  # kill the `while` loop
             if it == self.stepmax:
+                lost_volume = self.Vp_res
                 sed_continue = False
+        return lost_volume
 
     def _deposit_or_erode(self, px: int, py: int) -> None:
         """Decide if deposit or erode mud.
